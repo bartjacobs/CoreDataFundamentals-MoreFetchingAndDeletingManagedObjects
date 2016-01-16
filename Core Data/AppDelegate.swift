@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var coreDataManager = CoreDataManager()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        let managedObjectContext = coreDataManager.managedObjectContext
+
+        // Create Entity Description
+        let entityDescription = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
+
+        if let entityDescription = entityDescription {
+            // Create Managed Object
+            let list = NSManagedObject(entity: entityDescription, insertIntoManagedObjectContext: managedObjectContext)
+
+            print(list)
+
+            do {
+                // Save Changes
+                try managedObjectContext.save()
+
+            } catch {
+                // Error Handling
+            }
+        }
+
         return true
     }
 
