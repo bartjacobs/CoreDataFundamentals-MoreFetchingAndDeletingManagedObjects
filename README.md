@@ -1,7 +1,7 @@
-### Core Data Fundamentals: Setting Up the Core Data Stack
+### Core Data Fundamentals: Working With Managed Objects
 
 #### Author: Bart Jacobs
 
-In the [previous article](http://bartjacobs.com/core-data-fundamentals-core-data-stack/), you learned about the Core Data stack and the classes involved. In this article, we get our hands dirty by setting up the Core Data stack in an iOS application. We also take a look at the application template Xcode provides us with.
+In this installment of [Core Data Fundamentals](http://bartjacobs.com/tag/core-data-fundamentals/), we take a close look at the `NSManagedObject` class, a key class of the Core Data framework. You learn how to create a managed object, what classes are involved, and how a managed object is saved to a persistent store.
 
-**Read this article on the [blog](http://bartjacobs.com/core-data-fundamentals-setting-up-the-core-data-stack)**.
+**Read this article on the [blog](http://bartjacobs.com/core-data-fundamentals-working-with-managed-objects/)**.
