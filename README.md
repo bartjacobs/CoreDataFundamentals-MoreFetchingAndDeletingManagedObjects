@@ -1,7 +1,9 @@
-### Core Data Fundamentals: Reading and Updating Managed Objects
+### Core Data Fundamentals: More Fetching and Deleting Managed Objects
 
 #### Author: Bart Jacobs
 
-In the previous installment of [Core Data Fundamentals](http://bartjacobs.com/tag/core-data-fundamentals/), we created a **List** record and pushed it to the persistent store by saving its managed object context. The persistent store coordinator handled the nitty-gritty details of inserting the list record into the persistent store. This tutorial focuses on reading and updating records.
+The final piece of the [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) puzzle covers deleting records from a persistent store. I can assure you that deleting records isn't rocket science.
 
-**Read this article on the [blog](http://bartjacobs.com/core-data-fundamentals-fetching-managed-objects/)**.
+We also take a closer look at the `NSFetchRequest` class. In the previous tutorial, we used it to fetch every record of an entity. The `NSFetchRequest` class has a lot more to offer, though.
+
+**Read this article on the [blog](http://bartjacobs.com/core-data-fundamentals-more-fetching-and-deleting-managed-objects/)**.
