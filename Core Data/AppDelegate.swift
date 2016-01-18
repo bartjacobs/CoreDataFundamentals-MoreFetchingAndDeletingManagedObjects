@@ -15,8 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     lazy var coreDataManager = CoreDataManager()
 
+    let didSeedPersistentStore = "didSeedPersistentStore"
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let managedObjectContext = coreDataManager.managedObjectContext
+
+        // Seed Persistent Store
+        seedPersistentStoreWithManagedObjectContext(managedObjectContext)
 
         // Helpers
         var list: NSManagedObject? = nil
@@ -147,6 +152,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Unable to fetch managed objects for entity \(entity).")
         }
         
+        return result
+    }
+
+    // MARK: -
+    func seedPersistentStoreWithManagedObjectContext(managedObjectContext: NSManagedObjectContext) {
+        guard !NSUserDefaults.standardUserDefaults().boolForKey(didSeedPersistentStore) else { return }
+
+        let listNames = ["Home", "Work", "Leisure"]
+
+        for listName in listNames {
+            // Create List
+            if let list = createRecordForEntity("List", inManagedObjectContext: managedObjectContext) {
+                // Populate List
+                list.setValue(listName, forKey: "name")
+                list.setValue(NSDate(), forKey: "createdAt")
+
+                // Add Items
+                for i in 1...10 {
+                    // Create Item
+                    if let item = createRecordForEntity("Item", inManagedObjectContext: managedObjectContext) {
+                        // Set Attributes
+                        item.setValue("Item \(i)", forKey: "name")
+                        item.setValue(NSDate(), forKey: "createdAt")
+                        item.setValue(NSNumber(bool: (i % 3 == 0)), forKey: "completed")
+
+                        // Set List Relationship
+                        item.setValue(list, forKey: "list")
+                    }
+                }
+            }
+        }
+        
+        if saveChanges() {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: didSeedPersistentStore)
+        }
+    }
+
+    // MARK: -
+    func saveChanges() -> Bool {
+        var result = true
+
+        do {
+            try coreDataManager.managedObjectContext.save()
+
+        } catch {
+            result = false
+            let saveError = error as NSError
+            print("\(saveError), \(saveError.userInfo)")
+        }
+
         return result
     }
 
