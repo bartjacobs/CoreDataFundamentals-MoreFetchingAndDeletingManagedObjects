@@ -23,6 +23,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Seed Persistent Store
         seedPersistentStoreWithManagedObjectContext(managedObjectContext)
 
+        /*
+        // Create Fetch Request
+        let fetchRequest = NSFetchRequest(entityName: "List")
+
+        // Add Sort Descriptor
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
+        // Add Predicate
+        let predicate = NSPredicate(format: "name CONTAINS[c] %@", "o")
+        fetchRequest.predicate = predicate
+        */
+
+        // Create Fetch Request
+        let fetchRequest = NSFetchRequest(entityName: "Item")
+
+        // Add Sort Descriptor
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
+        // Add Predicate
+        let predicate1 = NSPredicate(format: "completed = 1")
+        let predicate2 = NSPredicate(format: "%K = %@", "list.name", "Home")
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
+
+        do {
+            let records = try managedObjectContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]
+
+            for record in records {
+                print(record.valueForKey("name"))
+            }
+
+        } catch {
+            let saveError = error as NSError
+            print("\(saveError), \(saveError.userInfo)")
+        }
+
+        /*
         // Helpers
         var list: NSManagedObject? = nil
 
@@ -88,6 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             print("Unable to save managed object context.")
         }
+        */
 
         return true
     }
