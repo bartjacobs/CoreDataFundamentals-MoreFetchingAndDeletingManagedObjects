@@ -47,6 +47,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             let items = list.mutableSetValueForKey("items")
 
+            if let anyItem = items.anyObject() as? NSManagedObject {
+                managedObjectContext.deleteObject(anyItem)
+            } else {
+                managedObjectContext.deleteObject(list)
+            }
+
+            /*
             // Create Item Record
             if let item = createRecordForEntity("Item", inManagedObjectContext: managedObjectContext) {
                 // Set Attributes
@@ -59,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // Add Item to Items
                 items.addObject(item)
             }
-            
+            */
             
             print("number of items: \(items.count)")
             print("---")
@@ -76,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             print("Unable to save managed object context.")
         }
-        
+
         return true
     }
 
